@@ -15,7 +15,8 @@ def extract_text_html(url):
             soup = bs(response.text, 'html.parser')
             text = soup.get_text()
         
-        filename = news_feed.feed.title
+        # filename = news_feed.feed.title writing all the articles in to one html file
+            filename = entry.title # write each article into individual html file
 
         with open(f"{filename}.html", "w", encoding="utf-8") as file:
             file.write(text)

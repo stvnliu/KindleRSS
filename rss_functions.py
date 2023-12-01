@@ -2,7 +2,11 @@ import feedparser as fp
 import requests
 import re
 from bs4 import BeautifulSoup as bs
-
+def format_html(htmlstr: str):
+    fmtstr = ""
+    fmtstr = fmtstr.strip() \
+        .replace("\n\n", "")
+    return fmtstr
 def extract_text_html(url):
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'}
     
@@ -18,7 +22,7 @@ def extract_text_html(url):
         filename = news_feed.feed.title
 
         with open(f"{filename}.html", "w", encoding="utf-8") as file:
-            file.write(text)
+            file.write(format_html(text))
         print(f"Downloading {entry.title}...")
 
 

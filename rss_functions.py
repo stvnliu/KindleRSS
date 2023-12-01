@@ -15,13 +15,21 @@ def extract_text_html(url):
             soup = bs(response.text, 'html.parser')
             text = soup.get_text()
         
-        # filename = news_feed.feed.title writing all the articles in to one html file
-            filename = entry.title # write each article into individual html file
+        filename = news_feed.feed.title # writing all the articles in to one html file
+
+        '''
+            filename = entry.title 
+
+            with open(f"{filename}.html", "w", encoding="utf-8") as file:
+                file.write(text)
+            print(f"Downloading {entry.title}...") # write each article into individual html file
+            # not sure which one to use
+        '''
+
 
         with open(f"{filename}.html", "w", encoding="utf-8") as file:
             file.write(text)
         print(f"Downloading {entry.title}...")
-
 
     except requests.exceptions.RequestException as e:
         print(f"Error fetching content from {url}: {e}")

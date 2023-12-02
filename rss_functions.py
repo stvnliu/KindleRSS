@@ -34,15 +34,9 @@ SCIENCE_DIRECT_MAPPING = {
     SCIENCE_DIRECT_CONFIG[9]: "sources",
     SCIENCE_DIRECT_CONFIG[10]: "related"
 }
-<<<<<<< HEAD
-"""
-Article object that abstracts a list of strings containing a representation of an article into a JSON file.
-"""
-=======
 
 
 # Article object that abstracts a list of strings containing a representation of an article into a JSON file.
->>>>>>> main
 class Article:
     def __init__(self, textlines: list[str], match_keywords: list[str]) -> None:
         match_index = 0

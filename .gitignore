@@ -1,2 +1,3 @@
 ./rss/*.json
 *.json
+*.pyc

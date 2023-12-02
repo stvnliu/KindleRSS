@@ -34,9 +34,15 @@ SCIENCE_DIRECT_MAPPING = {
     SCIENCE_DIRECT_CONFIG[9]: "sources",
     SCIENCE_DIRECT_CONFIG[10]: "related"
 }
+<<<<<<< HEAD
 """
 Article object that abstracts a list of strings containing a representation of an article into a JSON file.
 """
+=======
+
+
+# Article object that abstracts a list of strings containing a representation of an article into a JSON file.
+>>>>>>> main
 class Article:
     def __init__(self, textlines: list[str], match_keywords: list[str]) -> None:
         match_index = 0
@@ -70,8 +76,11 @@ class Article:
             self.data[SCIENCE_DIRECT_MAPPING.get(match_keywords[start])] = sections[start]
             start += 1
         # print(self.data) # FOR DEBUG
+
     def to_string(self):
         return json.dumps(self.data, indent=4)
+
+
 def format_html(htmlstr: str):
     htmlstr = htmlstr.strip()
     fmtstr = ""
@@ -83,6 +92,8 @@ def format_html(htmlstr: str):
         fmtstr += htmlstr[index]
         index+=1
     return fmtstr
+
+
 def extract_text_html(entry):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
@@ -106,6 +117,7 @@ def extract_text_html(entry):
     except requests.exceptions.RequestException as e:
         print(f"Error fetching content from {entry.title}: {e}")
         return None
+
 
 if __name__ == "__main__":
     print("You are not suppose to run this module individualy")

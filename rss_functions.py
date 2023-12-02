@@ -84,31 +84,28 @@ def format_html(htmlstr: str):
         fmtstr += htmlstr[index]
         index+=1
     return fmtstr
-def extract_text_html(url):
+def extract_text_html(entry):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
         }
-    
     try:
-        news_feed = fp.parse(url)
-        for entry in news_feed.entries:
-            response = requests.get(entry.link, headers=headers)
-            response.raise_for_status()
-            soup = bs(response.text, 'html.parser')
-            textlines = format_html(soup.get_text()).splitlines()
-            text_title = textlines[0]
-            articleObj = Article(textlines, SCIENCE_DIRECT_CONFIG)
-            # File handling
-            if not os.path.exists("./rss"):
-                os.mkdir("./rss")
-            # open new file for each new article
-            with open(f"./rss/{text_title}.json", "w", encoding="utf-8") as file:
-                file.write(articleObj.to_string())
-                file.close()
-            print(f"Downloading {entry.title}...")
+        response = requests.get(entry.link, headers=headers)
+        response.raise_for_status()
+        soup = bs(response.text, 'html.parser')
+        textlines = format_html(soup.get_text()).splitlines()
+        text_title = textlines[0]
+        article = Article(textlines, SCIENCE_DIRECT_CONFIG)
+        # File handling
+        if not os.path.exists("./rss"):
+            os.mkdir("./rss")
+        # open new file for each new article
+        with open(f"./rss/{text_title}.json", "w", encoding="utf-8") as file:
+            file.write(article.to_string())
+            file.close()
+        print(f"Downloading {entry.title}...")
 
     except requests.exceptions.RequestException as e:
-        print(f"Error fetching content from {url}: {e}")
+        print(f"Error fetching content from {entry.title}: {e}")
         return None
 
 if __name__ == "__main__":

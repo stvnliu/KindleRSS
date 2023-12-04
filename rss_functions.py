@@ -4,6 +4,7 @@ import requests
 import os
 from bs4 import BeautifulSoup as bs
 import json
+import re
 
 # Configuration for keywords in a typical ScienceDirect article
 SCIENCE_DIRECT_CONFIG = [
@@ -34,6 +35,13 @@ SCIENCE_DIRECT_MAPPING = {
     SCIENCE_DIRECT_CONFIG[9]: "sources",
     SCIENCE_DIRECT_CONFIG[10]: "related"
 }
+
+
+def sanitize_filename(title):
+    # Remove invalid characters from the title, replace with an underscore,
+    # and remove leading/trailing spaces
+    sanitized_title = re.sub(r'[\/:*?"<>|]', '_', title.strip())
+    return sanitized_title
 
 
 # Article object that abstracts a list of strings containing a representation of an article into a JSON file.
@@ -103,7 +111,7 @@ def extract_text_html(entry):
         if not os.path.exists("./rss"):
             os.mkdir("./rss")
         # open new file for each new article
-        with open(f"./rss/{text_title}.json", "w", encoding="utf-8") as file:
+        with open(f"./rss/{sanitize_filename(text_title)}.json", "w", encoding="utf-8") as file:
             file.write(article.to_string())
             file.close()
         print(f"Downloading {entry.title}...")

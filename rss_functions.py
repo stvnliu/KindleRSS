@@ -40,7 +40,7 @@ SCIENCE_DIRECT_MAPPING = {
 def sanitize_filename(title):
     # Remove invalid characters from the title, replace with an underscore,
     # and remove leading/trailing spaces
-    sanitized_title = re.sub(r'[\/:*?"<>|]', '_', title.strip())
+    sanitized_title = re.sub(r'[\/:*?"<>|]', '', title.strip())
     return sanitized_title
 
 

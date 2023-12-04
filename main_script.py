@@ -27,3 +27,8 @@ def fetch_rss_info(url):
 
 
 fetch_rss_info("https://www.sciencedaily.com/rss/top.xml")
+
+'''
+rss_url = str(input("Enter RSS url: "))
+fetch_rss_info(rss_url)
+'''

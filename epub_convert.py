@@ -32,6 +32,7 @@ def create_epub(title, date, source, main, sources, file_name):
     
     # wtf for some reasons the code here isn't working
     # it doesn't create new folder
+    # wtf all of the sudden it started working, i just turned off and on vscode
     epub_folder = "epub_files"
     if not os.path.exists(epub_folder):
         os.makedirs(epub_folder)

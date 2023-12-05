@@ -122,7 +122,7 @@ def extract_text_html(entry):
     
     return text_title
 
-'''
+''' this function is being moved to epub_convert.py, it was here for testing purposes
 def fetch_json_text(filename):
     with open(f"./rss/{filename}.json", "r") as file:
         json_data = json.load(file)

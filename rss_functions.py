@@ -120,9 +120,35 @@ def extract_text_html(entry):
         print(f"Error fetching content from {entry.title}: {e}")
         return None
 
+'''
+def fetch_json_text(filename):
+    with open(f"./rss/{filename}.json", "r") as file:
+        json_data = json.load(file)
+    print("JSON obejects: ", type(json_data))
+    
+    article_title = json_data["title"][0]
+    publish_date = json_data["date"][0]
+    article_source = json_data["source"][0]
+    article_summary = json_data["summary"][0]
+    article_main = ''
+    for i in json_data["story"]:
+        article_main = article_main + i
+    article_sources = ''
+    for i in json_data["sources"]:
+        article_sources = article_sources + "\n" + i
+    
+    """debug
+    print(article_sources)
+    print(article_main)    
+    print(article_summary)
+    print(article_title)
+    """
+'''
+
 
 if __name__ == "__main__":
     print("You are not suppose to run this module individualy")
     rss_feed_url = input("Enter your RSS feed URL: ")
     extract_text_html(rss_feed_url)
+    # fetch_json_text("Boiled bubbles jump to carry more heat  ScienceDaily") debug
                     

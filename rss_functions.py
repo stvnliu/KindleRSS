@@ -119,6 +119,8 @@ def extract_text_html(entry):
     except requests.exceptions.RequestException as e:
         print(f"Error fetching content from {entry.title}: {e}")
         return None
+    
+    return text_title
 
 '''
 def fetch_json_text(filename):

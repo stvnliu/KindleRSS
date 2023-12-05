@@ -39,8 +39,8 @@ def create_epub(title, date, source, main, sources, file_name):
     toc = []
     spine = ['nav']
 
-    # Create main content item
-    main_item = epub.EpubItem(uid="main", file_name="main.xhtml", media_type="application/xhtml+xml", content=main, content_type="application/xhtml+xml")
+    # Create main content item (EpubHtml)
+    main_item = epub.EpubHtml(title=title, file_name="main.xhtml", content=main)
     book.add_item(main_item)
 
     # Add main content to TOC and spine
@@ -68,7 +68,6 @@ def create_epub(title, date, source, main, sources, file_name):
     epub.write_epub(file_name, book, {})
 
     print(Back.GREEN + Fore.BLACK + " File " + Back.YELLOW + f" {file_name} " + Back.GREEN + " Successfully Written ")
-    
 
 # Example usage:
 title, date, source, main, sources = fetch_json_text("A farsighted approach to tackle nearsightedness  ScienceDaily")

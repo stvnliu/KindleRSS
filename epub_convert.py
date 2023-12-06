@@ -1,6 +1,6 @@
 import json
 from ebooklib import epub
-from colorama import Back, Fore
+import os
 
 def fetch_json_text(filename):
     with open(f"./rss/{filename}.json", "r") as file:
@@ -14,7 +14,7 @@ def fetch_json_text(filename):
     article_main = '\n'.join(json_data["story"])
     article_sources = '\n'.join(json_data["sources"])
 
-    # create_epub(article_title, publish_date, article_source, article_main, article_sources, filename)
+    create_epub(article_title, publish_date, article_source, article_main, article_sources, filename)
     
     '''debug
     print(article_title)
@@ -29,6 +29,18 @@ def fetch_json_text(filename):
 
 def create_epub(title, date, source, main, sources, file_name):
     book = epub.EpubBook()
+    
+    # wtf for some reasons the code here isn't working
+    # it doesn't create new folder
+    # wtf all of the sudden it started working, i just turned off and on vscode
+    epub_folder = "epub_files"
+    if not os.path.exists(epub_folder):
+        os.makedirs(epub_folder)
+
+    # Build the full file path within the "epub" folder
+    file_path = os.path.join(epub_folder, file_name + '.epub')
+
+    print("Full File Path:", file_path) # for debug
 
     book.set_identifier("1145141919810")
     book.set_title(title)
@@ -65,10 +77,12 @@ def create_epub(title, date, source, main, sources, file_name):
     book.spine = spine
 
     # Write to the file
-    epub.write_epub(file_name, book, {})
+    epub.write_epub(file_path, book, {})
 
-    print(Back.GREEN + Fore.BLACK + " File " + Back.YELLOW + f" {file_name} " + Back.GREEN + " Successfully Written ")
+    print("File " + f"{file_path} " + "Successfully Written ")
 
+'''debug
 # Example usage:
 title, date, source, main, sources = fetch_json_text("A farsighted approach to tackle nearsightedness  ScienceDaily")
 create_epub(title, date, source, main, sources, "A farsighted approach to tackle nearsightedness  ScienceDaily.epub")
+'''

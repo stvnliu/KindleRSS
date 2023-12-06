@@ -1,5 +1,6 @@
 import feedparser as fp
-from rss_functions import extract_text_html
+from rss_functions import extract_text_html, sanitize_filename
+from epub_convert import fetch_json_text
 
 def fetch_rss_info(url):
     news_feed = fp.parse(url)
@@ -17,9 +18,14 @@ def fetch_rss_info(url):
         choice = input(f"Download the post \"{entry.title}\"? (y/N/-y for all RSS entries): ") if not gloabl_yes else "y"
         if choice.lower() == "y":
             extract_text_html(entry)
+            text_title = extract_text_html(entry)
+            fetch_json_text(sanitize_filename(text_title))
         elif choice.lower() == "-y":
             gloabl_yes = True
             extract_text_html(entry)
+            # not sure whether it is working
+            text_title = extract_text_html(entry)
+            fetch_json_text(sanitize_filename(text_title))
         elif choice.upper() == "N":
             break
         else:

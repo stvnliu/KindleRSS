@@ -63,6 +63,7 @@ def create_epub(title, date, source, main, sources, file_name):
     book.toc = tuple(toc)
 
     # Add default NCX and Nav file
+
     book.add_item(epub.EpubNcx())
     book.add_item(epub.EpubNav())
 

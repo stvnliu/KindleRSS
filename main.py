@@ -41,7 +41,7 @@ def fetch_rss_info(url):
     print("EPUB Generation successful! Book located at ./out/ directory.") if success else print("EPUB generation failed!")
 
 
-fetch_rss_info("https://www.sciencedaily.com/rss/top.xml")
+fetch_rss_info("https://www.sciencedaily.com/rss/top.xml") # This is just an example RSS url
 
 '''
 rss_url = str(input("Enter RSS url: "))

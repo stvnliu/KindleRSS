@@ -1,5 +1,5 @@
 import json
-from generate_section import generate_section
+from lib.generate_section import generate_section
 from ebooklib import epub
 
 def bulk_epub(filename: str, metadata_file_loc: str = "./rss/metadata.json") -> bool:

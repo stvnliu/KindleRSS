@@ -1,5 +1,5 @@
 import json
-from epub_book.generate_section import generate_section
+from generate_section import generate_section
 from ebooklib import epub
 
 def bulk_epub(filename: str, metadata_file_loc: str = "../rss/metadata.json"):
@@ -8,7 +8,7 @@ def bulk_epub(filename: str, metadata_file_loc: str = "../rss/metadata.json"):
         file.close()
     book = epub.EpubBook()
     book.set_identifier("1145141919810")
-    book.set_title(articledata["feed_title"])
+    book.set_title(metadata["feed_title"])
     book.set_language('en')
 
     # Initialize Table of Contents (TOC) and spine
@@ -16,7 +16,7 @@ def bulk_epub(filename: str, metadata_file_loc: str = "../rss/metadata.json"):
     spine = ['nav']
     index = 1
     for article in metadata["collection"]:
-        with open(f"{article}.json", "r") as articleFile:
+        with open(f"{article}", "r") as articleFile:
             articledata = json.loads(articleFile.read())
             articleFile.close()
         
@@ -28,6 +28,7 @@ def bulk_epub(filename: str, metadata_file_loc: str = "../rss/metadata.json"):
             article["story"]
         )
         book.add_item(main_item)
+        book.add_author(articledata["source"][0])
         # Add main content to TOC and spine
         toc.append(epub_link)
         spine.append(main_item)
@@ -53,3 +54,6 @@ def bulk_epub(filename: str, metadata_file_loc: str = "../rss/metadata.json"):
     # Write to the file
     epub.write_epub(filename, book, {})
     return
+if __name__ == "__main__":
+    print("RUNNING INDEPENTLY")
+    bulk_epub("./test.epub")

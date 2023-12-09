@@ -48,7 +48,6 @@ def bulk_epub(filename: str, metadata_file_loc: str = "./rss/metadata.json") -> 
     book.toc = tuple(toc)
 
     # Add default NCX and Nav file
-
     book.add_item(epub.EpubNcx())
     book.add_item(epub.EpubNav())
 

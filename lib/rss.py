@@ -149,7 +149,6 @@ def fetch_json_text(filename):
     """
 '''
 
-
 if __name__ == "__main__":
     print("You are not suppose to run this module individualy")
     rss_feed_url = input("Enter your RSS feed URL: ")

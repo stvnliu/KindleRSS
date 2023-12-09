@@ -15,24 +15,31 @@ def bulk_epub(filename: str, metadata_file_loc: str = "./rss/metadata.json") -> 
     toc = []
     spine = ['nav']
     index = 1
+    author_list = ''
     for article in metadata["collection"]:
         with open(f"./rss/{article}", "r") as articleFile:
             articledata = json.loads(articleFile.read())
             articleFile.close()
         
+        title_with_author = f"{articledata['title'][0]} - {articledata['source'][0]}" # include author in the title
+
         # Create main content item (EpubHtml)
         main_item, epub_link = generate_section(
             str(index),
-            articledata["title"][0],
-            articledata["summary"][0],
+            title_with_author,
             articledata["story"]
         )
+
+        author_list = author_list + f"{articledata['source'][0]}, "
         book.add_item(main_item)
-        book.add_author(articledata["source"][0])
+        book.add_author(author_list)
         # Add main content to TOC and spine
         toc.append(epub_link)
         spine.append(main_item)
         index += 1
+    
+    print("Author list: ", author_list)
+
     # Define TOC
     book.toc = tuple(toc)
 
@@ -53,7 +60,9 @@ def bulk_epub(filename: str, metadata_file_loc: str = "./rss/metadata.json") -> 
 
     # Write to the file
     epub.write_epub(filename, book, {})
+
     return True
+
 if __name__ == "__main__":
-    print("RUNNING INDEPENTLY")
+    print("RUNNING INDEPENDENTLY")
     bulk_epub("./test.epub")

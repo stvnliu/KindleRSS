@@ -5,7 +5,7 @@ The aim of this project is to download articles from different RSS url and autom
 
  - [x] Fetching articles from RSS urls
  - [X] Convert JSON files into .epub
- - [ ] Adding all the fetched articles into a single epub file with TOC(table of content)
+ - [X] Adding all the fetched articles into a single epub file with TOC(table of content)
  - [ ] Automatically send to Kindle
 
 ## Contributors

@@ -101,6 +101,7 @@ def extract_text_html(entry):
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
         }
     try:
+        print(f"Downloading {entry.title}...")
         response = requests.get(entry.link, headers=headers)
         response.raise_for_status()
         soup = bs(response.text, 'html.parser')
@@ -114,7 +115,8 @@ def extract_text_html(entry):
         with open(f"./rss/{sanitize_filename(text_title)}.json", "w", encoding="utf-8") as file:
             file.write(article.to_string())
             file.close()
-        print(f"Downloading {entry.title}...")
+        print(f"Download for {entry.title} finished.")
+        return f"{sanitize_filename(text_title)}.json"
 
     except requests.exceptions.RequestException as e:
         print(f"Error fetching content from {entry.title}: {e}")

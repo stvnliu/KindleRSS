@@ -1,6 +1,7 @@
 import json
 from lib.generate_section import generate_section
 from ebooklib import epub
+from lib.rss import sanitize_filename
 
 def bulk_epub(filename: str, metadata_file_loc: str = "./rss/metadata.json") -> bool:
     with open(metadata_file_loc, "r") as file:
@@ -27,8 +28,11 @@ def bulk_epub(filename: str, metadata_file_loc: str = "./rss/metadata.json") -> 
         main_item, epub_link = generate_section(
             str(index),
             title_with_author,
+            sanitize_filename(str(articledata["date"][0])),  # Add the published date
             articledata["story"]
+            # articledata["summary"] is deleted beacause it's quite unneccesary 
         )
+        # print(sanitize_filename(str(articledata["date"][0]))) debug
 
         author_list = author_list + f"{articledata['source'][0]}, "
         book.add_item(main_item)

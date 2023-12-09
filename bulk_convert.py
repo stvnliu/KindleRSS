@@ -2,7 +2,7 @@ import json
 from generate_section import generate_section
 from ebooklib import epub
 
-def bulk_epub(filename: str, metadata_file_loc: str = "../rss/metadata.json") -> bool:
+def bulk_epub(filename: str, metadata_file_loc: str = "./rss/metadata.json") -> bool:
     with open(metadata_file_loc, "r") as file:
         metadata = json.loads(file.read())
         file.close()
@@ -16,7 +16,7 @@ def bulk_epub(filename: str, metadata_file_loc: str = "../rss/metadata.json") ->
     spine = ['nav']
     index = 1
     for article in metadata["collection"]:
-        with open(f"../rss/{article}", "r") as articleFile:
+        with open(f"./rss/{article}", "r") as articleFile:
             articledata = json.loads(articleFile.read())
             articleFile.close()
         

@@ -1,4 +1,6 @@
 import feedparser as fp
+import os
+from bulk_convert import bulk_epub
 from metadata_gen import metadata_gen
 from rss_functions import extract_text_html
 
@@ -32,6 +34,11 @@ def fetch_rss_info(url):
         print("Metadata generation succeeded!")
     else:
         print("Metadata generation failed!")
+    print("Starting EPUB generation process...")
+    if not os.path.exists("./out"):
+        os.mkdir("./out")
+    success = bulk_epub(f"./out/{news_feed.feed.title}.epub")
+    print("EPUB Generation successful! Book located at ./out/ directory.") if success else print("EPUB generation failed!")
 
 
 fetch_rss_info("https://www.sciencedaily.com/rss/top.xml")

@@ -21,13 +21,12 @@ def bulk_epub(filename: str, metadata_file_loc: str = "./rss/metadata.json") -> 
         with open(f"./rss/{article}", "r") as articleFile:
             articledata = json.loads(articleFile.read())
             articleFile.close()
-        
-        title_with_author = f"{articledata['title'][0]} - {articledata['source'][0]}" # include author in the title
 
         # Create main content item (EpubHtml)
         main_item, epub_link = generate_section(
             str(index),
-            title_with_author,
+            articledata['title'][0],
+            articledata['source'][0],
             sanitize_filename(str(articledata["date"][0])),  # Add the published date
             articledata["story"]
             # articledata["summary"] is deleted beacause it's quite unneccesary 

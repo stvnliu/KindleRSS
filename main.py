@@ -1,8 +1,8 @@
-import feedparser as fp
-import os
-from bulk_convert import bulk_epub
-from metadata_gen import metadata_gen
-from rss_functions import extract_text_html
+import  feedparser  as                  fp
+import  os
+from    lib.convert import              bulk_epub
+from    lib.generate_metadata import    metadata_gen
+from    lib.rss import                  extract_text_html
 
 def fetch_rss_info(url):
     news_feed = fp.parse(url)

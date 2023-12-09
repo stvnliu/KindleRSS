@@ -2,4 +2,4 @@
 *.json
 *.pyc
 __pycache__/
-*.epub
+./out/*.epub

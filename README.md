@@ -1,7 +1,7 @@
 # KindleRSS
 Generates a list of documents from an online RSS subscription source.   
 
-The aim of this project is to download articles from different RSS url and automatically fetch and send to Kindle in a cartain period of time.  
+The aim of this project is to fetch and download articles from different RSS url and automatically send to Kindle in a cartain period of time.  
 
  - [x] Fetching articles from RSS urls
  - [X] Convert JSON files into .epub

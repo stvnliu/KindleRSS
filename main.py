@@ -46,8 +46,10 @@ def fetch_rss_info(url):
     if not os.path.exists("./out"):
         os.mkdir("./out")
     
+    # get the date when the program is ran
     today_date = str(date.today())
     
+    # add date in the end of the book title
     success = bulk_epub(f"./out/{news_feed.feed.title} {today_date}.epub")
     print("EPUB Generation successful! Book located at ./out/ directory.") if success else print("EPUB generation failed!")
 

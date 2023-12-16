@@ -1,13 +1,18 @@
 import smtplib
 import ssl
-from email import message
+from email.mime.application import MIMEApplication
+from email.mime.multipart   import MIMEMultipart
+from email.mime.text        import MIMEText
+from email.utils            import formatdate, COMMASPACE
 SMTP_SERVERS = {
     "gmail.com": "smtp.gmail.com"
 }
 def mailsend(
         username: str,
-        passwd: str, 
+        passwd: str,
+        recipient: str, 
         mail_msg: str,
+        subject: str,
         mail_attachments: list,
         mailserver: str = None
     ) -> bool:
@@ -18,8 +23,17 @@ def mailsend(
         mailserver = SMTP_SERVERS[domain]
     with smtplib.SMTP_SSL() as server:
         server.login(username, passwd)
-        msg = message.EmailMessage()
+        msg = MIMEMultipart()
+        msg["From"] = username
+        msg["To"] = recipient
+        msg["Date"] = formatdate(localtime=True)
+        msg["Subject"] = subject
         for attachment in mail_attachments:
+            with open(attachment, "rb") as file:
+                part = MIMEApplication(
+                    file.read(),
+                    Name=
+                )
             msg.add_attachment(attachment)
         print("Sending email...")
     return 
@@ -34,5 +48,4 @@ with smtplib.SMTP_SSL(\
     ) as server:
     passwd = input("Password for the email address: ")
     server.login(username, passwd)
-
 

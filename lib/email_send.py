@@ -32,7 +32,7 @@ def mailsend(
             with open(attachment, "rb") as file:
                 part = MIMEApplication(
                     file.read(),
-                    Name=
+                    Name=None,
                 )
             msg.add_attachment(attachment)
         print("Sending email...")

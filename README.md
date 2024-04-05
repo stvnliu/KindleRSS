@@ -10,3 +10,6 @@ The aim of this project is to fetch and download articles from different RSS url
 ## Contributors
 - [Ate329](https://github.com/Ate329)
 - [stvnliu](https://github.com/stvnliu)
+
+## License
+This project is licensed under the terms of [MIT](https://github.com/Ate329/KindleRSS/blob/main/LICENSE) license.

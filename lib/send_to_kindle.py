@@ -7,7 +7,7 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-
+# Haven't tested this yet (too lazy)
 def send_file(filename):
     port = 465
     subject = ""

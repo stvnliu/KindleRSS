@@ -21,7 +21,7 @@ SCIENCE_DIRECT_CONFIG = [
     "RELATED STORIES"
 ]
 
-# JSON-friendly mapping according to SCIENCE_DIRECT_CONFIG 
+# JSON-friendly mapping according to SCIENCE_DIRECT_CONFIG
 SCIENCE_DIRECT_MAPPING = {
     SCIENCE_DIRECT_CONFIG[0]: "follow",
     SCIENCE_DIRECT_CONFIG[1]: "subscribe",
@@ -52,6 +52,7 @@ class Article:
         next_index = 0
         self.data = {}
         sections = []
+
         # Magic code. Targets sections between two match keywords
         # Somehow cannot match for the first section, so I have to manually patch it
         while match_index < len(match_keywords):
@@ -63,19 +64,23 @@ class Article:
                     break
                 index += 1
             match_data: list = []
+
             for i in range(last_index+1, next_index):
                 match_data.append(textlines[i])
+
             last_index = next_index
             sections.append(match_data)
             match_index += 1
         # DEBUG STATEMENT
-        #for section in sections:
+        # for section in sections:
         #    print(section)
         start = 0
         self.data["title"] = sections[0]
         sections.pop(0)
+
         while start < len(sections):
-            self.data[SCIENCE_DIRECT_MAPPING.get(match_keywords[start])] = sections[start]
+            self.data[SCIENCE_DIRECT_MAPPING.get(
+                match_keywords[start])] = sections[start]
             start += 1
         # print(self.data) # FOR DEBUG
 
@@ -88,18 +93,19 @@ def format_html(htmlstr: str):
     fmtstr = ""
     index = 0
     while index < len(htmlstr):
-        if htmlstr[index] == "\n" and htmlstr[index+1] == "\n": 
-            index+=1
+        if htmlstr[index] == "\n" and htmlstr[index+1] == "\n":
+            index += 1
             continue
         fmtstr += htmlstr[index]
-        index+=1
+        index += 1
     return fmtstr
 
 
 def extract_text_html(entry):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-        }
+    }
+
     try:
         print(f"Downloading {entry.title}...")
         response = requests.get(entry.link, headers=headers)
@@ -108,9 +114,11 @@ def extract_text_html(entry):
         textlines = format_html(soup.get_text()).splitlines()
         text_title = textlines[0]
         article = Article(textlines, SCIENCE_DIRECT_CONFIG)
+
         # File handling
         if not os.path.exists("./rss"):
             os.mkdir("./rss")
+
         # open new file for each new article
         with open(f"./rss/{sanitize_filename(text_title)}.json", "w", encoding="utf-8") as file:
             file.write(article.to_string())
@@ -121,8 +129,9 @@ def extract_text_html(entry):
     except requests.exceptions.RequestException as e:
         print(f"Error fetching content from {entry.title}: {e}")
         return None
-    
+
     return text_title
+
 
 ''' this function is being moved to epub_convert.py, it was here for testing purposes
 def fetch_json_text(filename):
@@ -154,4 +163,3 @@ if __name__ == "__main__":
     rss_feed_url = input("Enter your RSS feed URL: ")
     extract_text_html(rss_feed_url)
     # fetch_json_text("Boiled bubbles jump to carry more heat  ScienceDaily") debug
-                    

@@ -3,6 +3,7 @@ from lib.generate_section import generate_section
 from ebooklib import epub
 from lib.rss import sanitize_filename
 
+
 def bulk_epub(filename: str, metadata_file_loc: str = "./rss/metadata.json") -> bool:
     with open(metadata_file_loc, "r") as file:
         metadata = json.loads(file.read())
@@ -27,9 +28,10 @@ def bulk_epub(filename: str, metadata_file_loc: str = "./rss/metadata.json") -> 
             str(index),
             articledata['title'][0],
             articledata['source'][0],
-            sanitize_filename(str(articledata["date"][0])),  # Add the published date
+            # Add the published date
+            sanitize_filename(str(articledata["date"][0])),
             articledata["story"]
-            # articledata["summary"] is deleted beacause it's quite unneccesary 
+            # articledata["summary"] is deleted beacause it's quite unneccesary
         )
         # print(sanitize_filename(str(articledata["date"][0]))) debug
 
@@ -40,7 +42,7 @@ def bulk_epub(filename: str, metadata_file_loc: str = "./rss/metadata.json") -> 
         toc.append(epub_link)
         spine.append(main_item)
         index += 1
-    
+
     print("Author list: ", author_list)
 
     # Define TOC
@@ -52,7 +54,8 @@ def bulk_epub(filename: str, metadata_file_loc: str = "./rss/metadata.json") -> 
 
     # Define CSS style
     style = 'pre{white-space:pre-wrap;background:#f7f9fa;padding:10px 15px;color:#263238;line-height:1.6;font-size:13px;border-radius:3px;margin-top:0;margin-bottom:1em;overflow:auto}b,strong{font-weight:bolder}#title{font-size:16px;color:#212121;font-weight:600;margin-bottom:10px}hr{height:10px;border:0;box-shadow:0 10px 10px -10px #8c8b8b inset}'
-    nav_css = epub.EpubItem(uid="style_nav", file_name="style/nav.css", media_type="text/css", content=style)
+    nav_css = epub.EpubItem(
+        uid="style_nav", file_name="style/nav.css", media_type="text/css", content=style)
 
     # Add CSS file
     book.add_item(nav_css)
@@ -64,6 +67,7 @@ def bulk_epub(filename: str, metadata_file_loc: str = "./rss/metadata.json") -> 
     epub.write_epub(filename, book, {})
 
     return True
+
 
 if __name__ == "__main__":
     print("RUNNING INDEPENDENTLY")

@@ -2,7 +2,6 @@ import smtplib
 import ssl
 from email.mime.application import MIMEApplication
 from email.mime.multipart   import MIMEMultipart
-from email.mime.text        import MIMEText
 from email.utils            import formatdate, COMMASPACE
 SMTP_SERVERS = {
     "gmail.com": "smtp.gmail.com"
@@ -32,20 +31,10 @@ def mailsend(
             with open(attachment, "rb") as file:
                 part = MIMEApplication(
                     file.read(),
-                    Name=None,
+                    Name=attachment,
                 )
-            msg.add_attachment(attachment)
+            msg.attach(part)
+        reply = server.login(username, passwd)
+        reply
         print("Sending email...")
     return 
-port = 465
-context = ssl.create_default_context()
-username = input("Email address you would like to send the Kindle email from: ")
-_mailserver = input("If you have a custom SMTP server address you would like to use, state here, or leave blank to continue: ")
-with smtplib.SMTP_SSL(\
-        _mailserver if _mailserver else SMTP_SERVERS[username.split("@")[1]],\
-        port=port, \
-        context=context \
-    ) as server:
-    passwd = input("Password for the email address: ")
-    server.login(username, passwd)
-
